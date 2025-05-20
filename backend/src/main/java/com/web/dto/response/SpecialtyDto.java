@@ -7,5 +7,6 @@ public interface SpecialtyDto {
     public String getImage();
     public String getDescription();
     public String getNumdoctor();
+    public String getContent();
 
 }

@@ -46,8 +46,15 @@ public class DoctorService {
         User user;
 
         if (dto.getUserId() != null) {
+            if(userRepository.findByEmail(dto.getEmail(), dto.getUserId()).isPresent()){
+                throw new MessageException("Email đã được sử dụng");
+            }
             user = userRepository.findById(dto.getUserId()).orElse(new User());
-        } else {
+        }
+        else {
+            if(userRepository.findByEmail(dto.getEmail()).isPresent()){
+                throw new MessageException("Email đã được sử dụng");
+            }
             user = new User();
             user.setActived(true);
             user.setCreatedDate(new Date(System.currentTimeMillis()));

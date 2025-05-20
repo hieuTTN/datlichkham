@@ -8,12 +8,18 @@ import userAdmin from '../pages/admin/user'
 import AdminCategory from '../pages/admin/category'
 import AdminBlog from '../pages/admin/blog'
 import AdminAddBlog from '../pages/admin/addblog'
-import AdminHistoryPay from '../pages/admin/historypay'
-import AdminDeductionHistory from '../pages/admin/deductionhistory'
-import AdminRealEstate from '../pages/admin/realestate'
-import AdminReport from '../pages/admin/report'
+import AdminCenter from '../pages/admin/center'
+import AdminAddCenter from '../pages/admin/addcenter'
 import AdminThongbao from '../pages/admin/thongbao'
 import ThongKeAdmin from '../pages/admin/thongke'
+import AdminService from '../pages/admin/service'
+import AdminAddService from '../pages/admin/addservice'
+import AdminSpecialty from '../pages/admin/specialty'
+import AdminAddSpecialty from '../pages/admin/addspecialty'
+import AdminDoctor from '../pages/admin/doctor'
+import AdminAddDoctor from '../pages/admin/adddoctor'
+import AdminDoctorDate from '../pages/admin/doctordate'
+import AdminAddDoctorDate from '../pages/admin/adddoctordate'
 
 
 //public
@@ -68,12 +74,18 @@ const adminRoutes = [
     { path: "/admin/category", component: AdminCategory, layout: layoutAdmin },
     { path: "/admin/blog", component: AdminBlog, layout: layoutAdmin },
     { path: "/admin/add-blog", component: AdminAddBlog, layout: layoutAdmin },
-    { path: "/admin/history-pay", component: AdminHistoryPay, layout: layoutAdmin },
-    { path: "/admin/deduction-history", component: AdminDeductionHistory, layout: layoutAdmin },
-    { path: "/admin/real-estate", component: AdminRealEstate, layout: layoutAdmin },
-    { path: "/admin/report", component: AdminReport, layout: layoutAdmin },
+    { path: "/admin/center", component: AdminCenter, layout: layoutAdmin },
+    { path: "/admin/add-center", component: AdminAddCenter, layout: layoutAdmin },
     { path: "/admin/thong-bao", component: AdminThongbao, layout: layoutAdmin },
     { path: "/admin/thong-ke", component: ThongKeAdmin, layout: layoutAdmin },
+    { path: "/admin/service", component: AdminService, layout: layoutAdmin },
+    { path: "/admin/add-service", component: AdminAddService, layout: layoutAdmin },
+    { path: "/admin/specialty", component: AdminSpecialty, layout: layoutAdmin },
+    { path: "/admin/add-specialty", component: AdminAddSpecialty, layout: layoutAdmin },
+    { path: "/admin/doctor", component: AdminDoctor, layout: layoutAdmin },
+    { path: "/admin/add-doctor", component: AdminAddDoctor, layout: layoutAdmin },
+    { path: "/admin/doctordate", component: AdminDoctorDate, layout: layoutAdmin },
+    { path: "/admin/adddoctordate", component: AdminAddDoctorDate, layout: layoutAdmin },
 ];
 
 

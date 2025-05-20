@@ -101,17 +101,17 @@ function Header({ children }){
         <div class="d-flex" id="wrapper">
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header p-3 text-white">
-                <h3>Admin <i class="fa fa-bars pointer" id="iconbaradmin" onClick={openClose}></i></h3> 
+                <h5>Quản Lý Phòng Khám <i class="fa fa-bars pointer" id="iconbaradmin" onClick={openClose}></i></h5> 
             </div>
             <ul class="list-unstyled components">
                 <li className={isActive("/admin/index")}>
                     <a href="/" class="text-white text-decoration-none">
-                        <i class="fa fa-home"></i> Trang chủ
+                        <i class="fa fa-home fa-fw"></i> Trang chủ
                     </a>
                 </li>
                 <li className={isActive(["/admin/user"])}>
                     <a href="#coltaikhoan" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-user"></i> Tài khoản
+                        <i class="fa fa-user fa-fw"></i> Tài khoản
                     </a>
                     <ul class="collapse list-unstyleds" id="coltaikhoan">
                         <li class="nav-item">
@@ -124,7 +124,7 @@ function Header({ children }){
                 </li>
                 <li className={isActive(["/admin/blog", "/admin/add-blog"])}>
                     <a href="#colbaiviet" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-newspaper"></i> Bài viết
+                        <i class="fa fa-newspaper fa-fw"></i> Bài viết
                     </a>
                     <ul class="collapse list-unstyleds" id="colbaiviet">
                         <li class="nav-item">
@@ -137,22 +137,64 @@ function Header({ children }){
                 </li>
                 <li className={isActive(["/admin/category"])}>
                     <a href="category" class="text-white text-decoration-none">
-                        <i class="fa fa-list"></i> Danh mục
+                        <i class="fa fa-list fa-fw"></i> Danh mục
                     </a>
                 </li>
-                <li className={isActive(["/admin/real-estate", "/admin/add-real-estate"])}>
+                <li className={isActive(["/admin/center", "/admin/add-center"])}>
                     <a href="#dashboardSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-home"></i> Tin đăng BĐS
+                        <i class="fa fa-hospital fa-fw"></i> Cơ sở khám
                     </a>
                     <ul class="collapse list-unstyleds" id="dashboardSubmenu">
                         <li class="nav-item">
-                            <a href="real-estate" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách tin đăng</a>
+                            <a href="center" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách cơ sở khám</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add-center" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm cơ sở khám</a>
+                        </li>
+                    </ul>
+                </li>
+                <li className={isActive(["/admin/specialty", "/admin/add-specialty"])}>
+                    <a href="#specialty" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
+                        <i class="fa fa-syringe fa-fw"></i> Chuyên khoa
+                    </a>
+                    <ul class="collapse list-unstyleds" id="specialty">
+                        <li class="nav-item">
+                            <a href="specialty" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách chuyên khoa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add-specialty" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm chuyên khoa</a>
+                        </li>
+                    </ul>
+                </li>
+                <li className={isActive(["/admin/service", "/admin/add-service"])}>
+                    <a href="#dichvukham" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
+                        <i class="fa fa-heartbeat fa-fw"></i> Dịch vụ khám
+                    </a>
+                    <ul class="collapse list-unstyleds" id="dichvukham">
+                        <li class="nav-item">
+                            <a href="service" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách dịch vụ khám</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add-service" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm dịch vụ khám</a>
+                        </li>
+                    </ul>
+                </li>
+                <li className={isActive(["/admin/doctor", "/admin/add-doctor", "/admin/adddoctordate","/admin/doctordate"])}>
+                    <a href="#bacsy" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
+                        <i class="fa-solid fa-user-doctor fa-fw"></i> Bác sỹ
+                    </a>
+                    <ul class="collapse list-unstyleds" id="bacsy">
+                        <li class="nav-item">
+                            <a href="doctor" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách bác sỹ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add-doctor" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm bác sỹ</a>
                         </li>
                     </ul>
                 </li>
                 <li className={isActive(["/admin/history-pay", "/admin/deduction-history","/admin/thong-ke"])}>
                     <a href="#dashboardSubmenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa-solid fa-chart-line"></i> Thống kê
+                        <i class="fa-solid fa-chart-line fa-fw"></i> Thống kê
                     </a>
                     <ul class="collapse list-unstyleds" id="dashboardSubmenu1">
                         <li class="nav-item">
@@ -165,11 +207,6 @@ function Header({ children }){
                             <a href="thong-ke" class="text-white text-decoration-none ps-4"><i class="fa fa-chart-line"></i> Thống kê</a>
                         </li>
                     </ul>
-                </li>
-                <li className={isActive(["/admin/report"])}>
-                    <a href="report" class="text-white text-decoration-none">
-                        <i class="fa fa-flag"></i> Báo cáo
-                    </a>
                 </li>
                 <li>
                     <a href="#" onClick={logout} class="text-white text-decoration-none">

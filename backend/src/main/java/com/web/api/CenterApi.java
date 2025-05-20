@@ -27,6 +27,12 @@ public class CenterApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/public/find-all-list")
+    public ResponseEntity<?> getAll(){
+        List<Center> result = centerService.findAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/create")
     public ResponseEntity<?> save(@RequestBody Center center){
         Center result = centerService.save(center);

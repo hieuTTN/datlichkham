@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
 
-    @Query(value = "select  s.id, s.name, s.description, s.image,\n" +
+    @Query(value = "select  s.id, s.name, s.description, s.image,s.content,\n" +
             "(SELECT count(d.id) from doctors d WHERE d.specialty_id = s.id) as numdoctor\n" +
             "from specialty s",nativeQuery = true)
     Page<SpecialtyDto> getAll(Pageable pageable);

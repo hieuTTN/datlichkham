@@ -131,6 +131,7 @@ public class DoctorDateService {
         DoctorScheduleDTO scheduleDTO = new DoctorScheduleDTO();
         scheduleDTO.setDoctorId(doctorId);
         scheduleDTO.setDates(dateDTOs);
+        scheduleDTO.setDoctor(doctor);
 
         return scheduleDTO;
     }
@@ -142,7 +143,10 @@ public class DoctorDateService {
     public void deleteDoctorDate(Long id) {
         List<DoctorTime> times = doctorTimeRepository.findByDoctorDateId(id);
         doctorTimeRepository.deleteAll(times);
-
         doctorDateRepository.deleteById(id);
+    }
+
+    public List<DoctorDate> findByDoctor(Long doctorId) {
+        return doctorDateRepository.findByDoctorId(doctorId);
     }
 }

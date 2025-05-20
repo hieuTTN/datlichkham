@@ -47,5 +47,9 @@ public class CenterService {
     public Center findById(Long id){
         return centerRepository.findById(id).get();
     }
+
+    public List<Center> findAll() {
+        return centerRepository.findAll();
+    }
 }
 

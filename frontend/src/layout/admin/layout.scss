@@ -19,8 +19,8 @@
     padding-left: 20px;
 }
 #sidebar .list-unstyled li {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #sidebar .list-unstyled li.active {
@@ -29,6 +29,7 @@
 
 #sidebar .list-unstyled li a {
     color: #ffffff;
+    font-size: 14px;
 }
 
 #page-content-wrapper {
@@ -350,7 +351,7 @@
     color: #fff;
 }
 .imgtable{
-    width: 100px;
+    max-width: 100px;
     height: 80px;
     object-fit: cover;
 }
@@ -486,4 +487,34 @@
 }
 #tabletinhbds{
     max-height: 350px !important;
+}
+.motadv{
+    height: 60vh;
+    overflow-y: scroll;
+}
+.spicon{
+    width: 60px;
+}
+.col40{
+    width: 40%;
+}
+.select-container{
+    margin-left: 10px;
+}
+.imgadmin{
+    max-width: 100px;
+    margin-top: 20px;
+}
+.blockbtn{
+    display: block;
+}
+.divtable{
+    margin-top: 10px;
+}
+
+.timetable{
+   padding: 0.5rem 1rem; border: 1px solid rgb(40, 167, 69); background-color: rgb(212, 237, 218); cursor: pointer;
+}
+.ipngay{
+    padding: 5rem 0.5rem;
 }

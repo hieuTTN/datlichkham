@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/specialty")
 @CrossOrigin
@@ -36,6 +38,12 @@ public class SpecialtyApi {
     @GetMapping("/public/find-all")
     public ResponseEntity<?> findAllList(Pageable pageable){
         Page<SpecialtyDto> result = specialtyService.findAll(pageable);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @GetMapping("/public/find-all-list")
+    public ResponseEntity<?> findAllList(){
+        List<Specialty> result = specialtyService.findAll();
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 

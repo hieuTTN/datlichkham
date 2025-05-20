@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Component
 public class SpecialtyService {
@@ -39,5 +40,9 @@ public class SpecialtyService {
 
     public Specialty findById(Long id){
         return specialtyRepository.findById(id).get();
+    }
+
+    public List<Specialty> findAll() {
+        return specialtyRepository.findAll();
     }
 }
