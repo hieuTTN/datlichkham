@@ -1,5 +1,6 @@
 package com.web.dto.response;
 
+import com.web.entity.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,8 @@ public class BlogResponse {
     private String image;
 
     private Integer numView;
+
+    private Category category;
 
     private UserResponse user;
 }
