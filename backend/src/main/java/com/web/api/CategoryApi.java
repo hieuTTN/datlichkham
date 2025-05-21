@@ -60,4 +60,10 @@ public class CategoryApi {
         List<CategoryDto> result = categoryService.findAllQuantity();
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
+
+    @GetMapping("/public/findById")
+    public ResponseEntity<?> findById(@RequestParam Long id){
+        Category result = categoryService.findById(id);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 }

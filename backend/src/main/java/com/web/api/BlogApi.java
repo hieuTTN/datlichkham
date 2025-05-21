@@ -53,5 +53,10 @@ public class BlogApi {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
+    @GetMapping("/public/find-by-category")
+    public ResponseEntity<?> findByCategory(@RequestParam Long categoryId, Pageable pageable){
+        Page<Blog> result = blogService.findByCategory(categoryId,pageable);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 
 }

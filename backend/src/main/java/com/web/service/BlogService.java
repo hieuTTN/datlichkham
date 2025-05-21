@@ -76,4 +76,8 @@ public class BlogService {
         List<BlogResponse> result = blog.stream().map(b-> blogMapper.blogToResponse(b)).collect(Collectors.toList()); ;
         return result;
     }
+
+    public Page<Blog> findByCategory(Long categoryId, Pageable pageable) {
+        return blogRepository.findByCategory(categoryId, pageable);
+    }
 }

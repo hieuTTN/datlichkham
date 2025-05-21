@@ -22,8 +22,12 @@ public class ServicesService {
         return services;
     }
 
-    public Page<Services> findAll(Pageable page){
-        return servicesRepository.findAll(page);
+    public Page<Services> findAll(String search, Pageable page){
+        if(search ==null){
+            search = "";
+        }
+        search = "%"+search+"%";
+        return servicesRepository.findByParam(search,page);
     }
 
     public void delete(Long id) {

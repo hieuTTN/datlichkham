@@ -26,12 +26,13 @@ import AdminAddDoctorDate from '../pages/admin/adddoctordate'
 import login from "../pages/public/login";
 import regisPage from '../pages/public/regis'
 import index from "../pages/public/index";
-import TraCuuLichTiem from "../pages/public/tracuulichtiem";
-import LichTiemDaQua from "../pages/public/lichtiemdaqua";
-import TimKiemVacxin from "../pages/public/timkiemvaccine";
 import confirmPage from '../pages/public/confirm'
 import forgotPage from '../pages/public/forgot'
 import datLaiMatKhauPage from '../pages/public/datlaimatkhau'
+import ChiTietBaiViet from '../pages/public/chitietbaiviet'
+import DoctorDetail from '../pages/public/doctordetail'
+import Service from '../pages/public/service'
+import Blog from '../pages/public/blog'
 
 //customer
 import dangkytiemchung from "../pages/customer/dangkytiemchung";
@@ -48,15 +49,16 @@ import CustomerSchedule from "../pages/staff/customerSchedule/CustomerSchedule";
 
 const publicRoutes = [
     {path: "/", component: index},
-    { path: "/tim-kiem-vaccine", component: TimKiemVacxin },
     {path: "/index", component: index},
+    { path: "/blog-detail", component: ChiTietBaiViet },
+    { path: "/doctor-detail", component: DoctorDetail },
+    { path: "/services", component: Service },
+    { path: "/blog", component: Blog },
     {path: "/login", component: login, layout: layoutLogin},
     {path: "/regis", component: regisPage, layout: layoutLogin},
     { path: "/confirm", component: confirmPage, layout: layoutLogin },
     { path: "/forgot", component: forgotPage, layout: layoutLogin },
     { path: "/datlaimatkhau", component: datLaiMatKhauPage, layout: layoutLogin },
-    {path: "/tra-cuu-lich-tiem", component: TraCuuLichTiem},
-    {path: "/lich-tiem-da-qua", component: LichTiemDaQua},
 ];
 
 const customerRoutes = [

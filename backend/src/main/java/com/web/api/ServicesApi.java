@@ -33,8 +33,8 @@ public class ServicesApi {
     }
 
     @GetMapping("/public/find-all")
-    public ResponseEntity<?> findAllList(Pageable pageable){
-        Page<Services> result = servicesService.findAll(pageable);
+    public ResponseEntity<?> findAllList(@RequestParam(required = false) String search,Pageable pageable){
+        Page<Services> result = servicesService.findAll(search,pageable);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 

@@ -8,23 +8,37 @@ export const HeaderContext = createContext();
 
 var token = localStorage.getItem("token");
 function Header (){
-var auth = <a href="/login" class="itemheader itemtopheader hotlineheader">Đăng nhập</a>
-if(token != null){
-  auth = <>
-  <a href="/tai-khoan" class="itemheader itemtopheader">Tài khoản</a>
-  <a onClick={()=>logout()} class="itemheader itemtopheader hotlineheader pointer">Đăng xuất</a>
-  </>
-}
-const [isCssLoaded, setCssLoaded] = useState(false);
-useEffect(()=>{
-  import('../styles/styleuser.scss').then(() => setCssLoaded(true));
-}, []);
-function logout(){
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  window.location.replace('login')
-}
- if (!isCssLoaded) {
+
+  var auth = <a href="/login" class="itemheader itemtopheader hotlineheader">Đăng nhập</a>
+
+  if(token != null){
+    auth = <>
+      <a href="/tai-khoan" class="itemheader itemtopheader">Tài khoản</a>
+      <a onClick={()=>logout()} class="itemheader itemtopheader hotlineheader pointer">Đăng xuất</a>
+    </>
+  }
+
+  const [isCssLoaded, setCssLoaded] = useState(false);
+  const [category, setCategory] = useState([]);
+
+  useEffect(()=>{
+
+    import('../styles/styleuser.scss').then(() => setCssLoaded(true));
+    const getCategory = async() =>{
+        var response = await getMethod('/api/category/public/find-all');
+        var result = await response.json();
+        setCategory(result)
+    };
+    getCategory();
+  }, []);
+
+  function logout(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.replace('login')
+  }
+
+  if (!isCssLoaded) {
       return <></>
   }
 
@@ -56,14 +70,23 @@ return(
       </div>
       <hr className='hrheader-web'/>
       <div class="container-web container-bottom-header">
-          <a href="" class="itemheader">Trang chủ</a>
+          <a href="/" class="itemheader">Trang chủ</a>
           <a href="" class="itemheader">Giới thiệu</a>
           <a href="" class="itemheader">Chuyên khoa</a>
           <a href="" class="itemheader">Cơ sở khám</a>
           <a href="" class="itemheader">Đội ngũ bác sĩ</a>
           <a href="tra-cuu-lich-tiem" class="itemheader">Đăng ký khám</a>
-          <a href="" class="itemheader">Bảng giá dịch vụ</a>
-          <a href="" class="itemheader">Bài viết</a>
+          <a href="/services" class="itemheader">Bảng giá dịch vụ</a>
+          <div className="itemheader dropdown-news">
+            <a href="#" className="itemheader">Tin tức</a>
+            <div className="dropdown-menu-news">
+              {category.map((item, index) => (
+                <a key={index} href={`/blog?category=${item.id}`} className="dropdown-item-news">
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </div>
       </div>
     </div>
     
