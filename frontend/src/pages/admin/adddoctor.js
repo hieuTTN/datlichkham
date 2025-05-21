@@ -71,6 +71,7 @@ const AdminAddDoctor = ()=>{
             "experienceYears": event.target.elements.experienceYears.value,
             "fullName": event.target.elements.fullName.value,
             "degree": event.target.elements.degree.value,
+            "position": event.target.elements.position.value,
             "gender": event.target.elements.gender.value,
             "consultationFee": event.target.elements.consultationFee.value,
             "username": event.target.elements.email.value,
@@ -164,6 +165,8 @@ const AdminAddDoctor = ()=>{
                                     <div className='col-sm-6'>
                                         <label class="lb-form">Chi phí khám</label>
                                         <input defaultValue={item?.consultationFee} name="consultationFee" type="text" class="form-control"/>
+                                        <label class="lb-form">Chức vụ</label>
+                                        <input defaultValue={item?.position} name="position" type="text" class="form-control"/>
                                     </div>
                                     <div className='col-sm-6'>
                                         <label class="lb-form">Avatar</label>

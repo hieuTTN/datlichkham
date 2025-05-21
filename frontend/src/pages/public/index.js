@@ -13,26 +13,39 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
+import ModalCenter from './modalcenter'
 
 
 var sizepro = 20
 function Home(){
-    const [itemType, setItemType] = useState([]);
+    const [coSoKhams, setCoSoKhams] = useState([]);
+    const [coSoKham, setCoSoKham] = useState(null);
     const [itemNews, setItemNews] = useState([]);
+    const [doctors, setDoctors] = useState([]);
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     useEffect(()=>{
-        // const getItemTyoe = async() =>{
-        //     var response = await getMethod('/api/vaccine/public/vaccine-type');
-        //     var result = await response.json();
-        //     setItemType(result)
-        // };
-        // getItemTyoe();
-        // const getItemNews = async() =>{
-        //     var response = await getMethod('/api/news/public/top-6');
-        //     var result = await response.json();
-        //     setItemNews(result)
-        // };
-        // getItemNews();
+        const getCoSoKham = async() =>{
+            var response = await getMethod('/api/center/public/find-all-list');
+            var result = await response.json();
+            setCoSoKhams(result)
+        };
+        getCoSoKham();
+        const getItemNews = async() =>{
+            var response = await getMethod('/api/blog/public/best-view');
+            var result = await response.json();
+            setItemNews(result)
+        };
+        getItemNews();
+        const getDoctors = async() =>{
+            var response = await getMethod('/api/doctor/public/get-cd');
+            var result = await response.json();
+            setDoctors(result)
+            if(result.length>0){
+                setSelectedDoctor(result[0])
+            }
+        };
+        getDoctors();
     }, []);
   
 
@@ -66,40 +79,83 @@ function Home(){
         </div>
 
         <div className='container-web'>
-            {itemType.map((item, index)=>{
-            return <div className=''>
-                <div class="headersection">
-                    <h4>Loại vaccine {item.vaccineType.typeName}</h4>
-                </div>
-                <div className='row'>
-                {item.vaccines.map((vaccine, index)=>{
-                    return <a href={"thong-tin-vaccine?id="+vaccine.id} className='col-sm-3 taga-index'>
-                    <img src={vaccine.image} className='img-vaccine-index'/>
-                    <span className='vaccine-name-index'>{vaccine.name}</span>
-                </a>
-                })} 
-                </div>
+            <h3 className='text-center titlemain'>Các Cơ Sở Khám</h3>
+
+            <div className=''>
+                 <Swiper
+                    modules={[Navigation, Pagination]}
+                    spaceBetween={30}
+                    slidesPerView={3}
+                    slidesPerGroup={3}
+                    navigation
+                    loop={true}
+                    pagination={{ clickable: true }}
+                >
+                    {coSoKhams.map((item, index)=>{
+                        return <SwiperSlide>
+                        <div onClick={()=>setCoSoKham(item)} data-bs-toggle="modal" data-bs-target="#modalCenter" className="coSoKhamIndex">
+                            <img src={item.image} className='imgcosokhamindex'/>
+                            <span className='tencosokhamindex'>{item.centerName}</span>
+                        </div>
+                        </SwiperSlide>
+                    })}
+                </Swiper>
             </div>
-            })}
+            <h3 className='text-center titlemain'>Đội Ngũ Bác Sĩ</h3>
+            <div className="container mt-5">
+                <div className="row doctor-detail-box p-4 shadow">
+                    <div className="col-md-4 text-center">
+                    <a href={'doctor-detail?id='+selectedDoctor?.id}><img src={selectedDoctor?.user.avatar} alt={selectedDoctor?.fullName} className="img-fluid rounded doctor-main-img" /></a>
+                    </div>
+                    <div className="col-md-8">
+                    <p className="text-uppercase font-weight-bold">Chuyên Khoa: {selectedDoctor?.specialty.name}</p>
+                    <h4><a  className="text-success font-weight-bold" href={'doctor-detail?id='+selectedDoctor?.id}>{selectedDoctor?.fullName}</a></h4>
+                    <p><strong>{selectedDoctor?.position}</strong></p>
+                    <div className="white-space-pre-line motabacsiindex" dangerouslySetInnerHTML={{__html:selectedDoctor?.description}}></div>
+                    </div>
+                </div>
+
+
+                <Swiper
+                    modules={[Navigation, Pagination]}
+                    spaceBetween={30}
+                    slidesPerView={5}
+                    navigation
+                    loop={true}
+                    pagination={{ clickable: true }}
+                >
+                    {doctors.map((item, index)=>{
+                        return <SwiperSlide>
+                         <div className={`card doctor-thumb m-2`} onClick={() => setSelectedDoctor(item)}>
+                            <img src={item.user.avatar} className="card-img-top" />
+                        </div>
+                        </SwiperSlide>
+                    })}
+                </Swiper>
+            </div>
+
 
             <div className='news-index-block'>
-                <h5>TIN TỨC</h5>
+                <h5 className='text-center titlemain'>Tin tức mới nhất</h5>
                 <hr/>
                 <div className="news-slider">
                 <Swiper
                     modules={[Navigation, Pagination]}
                     spaceBetween={30}
                     slidesPerView={3}
-                    // navigation
+                    slidesPerGroup={3}
+                    navigation
                     loop={true}
                     pagination={{ clickable: true }}
                 >
                     {itemNews.map((item, index)=>{
                         return <SwiperSlide>
-                        <div className="news-item">
-                            <a href={"chi-tiet-tin-tuc?id="+item.id}><img src={item.image} alt={item.title} /></a>
-                            <a href={"chi-tiet-tin-tuc?id="+item.id}><h3>{item.title}</h3></a>
-                            <p>{item.content}</p>
+                        <div className="blogindex">
+                            <a href={'blog-detail?id='+item.id}><img src={item.image} className="imgblogindex" alt={item.title} /></a>
+                            <div className="news-date mb-2">
+                                <i className='fa fa-calendar-alt'></i> {item.createdDate}
+                            </div>
+                            <a href={'blog-detail?id='+item.id} className="titleblogindex">{item.title}</a>
                         </div>
                         </SwiperSlide>
                     })}
@@ -108,6 +164,7 @@ function Home(){
             </div>
         </div>
     </div>
+    <ModalCenter center={coSoKham}/>
      </>
     );
 }

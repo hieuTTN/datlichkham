@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,6 +81,7 @@ public class DoctorService {
         doctor.setFullName(dto.getFullName());
         doctor.setDegree(dto.getDegree());
         doctor.setGender(dto.getGender());
+        doctor.setPosition(dto.getPosition());
         doctor.setDescription(dto.getDescription());
         doctor.setConsultationFee(dto.getConsultationFee());
         doctor.setUser(user);
@@ -119,5 +121,9 @@ public class DoctorService {
 
     public Doctor findById(Long id) {
         return doctorRepository.findById(id).get();
+    }
+
+    public List<Doctor> doctors() {
+        return doctorRepository.haveCD();
     }
 }

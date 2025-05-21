@@ -15,6 +15,8 @@ public class DoctorDTO {
     private String gender;
     private String description;
     private Double consultationFee;
+    private String position;
+
 
     private Long userId;
     private String username;

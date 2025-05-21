@@ -26,6 +26,8 @@ public class Doctor {
 
     private String description;
 
+    private String position;
+
     private Double consultationFee;
 
     @OneToOne(cascade = CascadeType.REMOVE)
