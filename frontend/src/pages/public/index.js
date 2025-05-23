@@ -102,7 +102,7 @@ function Home(){
                 </Swiper>
             </div>
             <h3 className='text-center titlemain'>Đội Ngũ Bác Sĩ</h3>
-            <div className="container mt-5">
+            <div className="container mt-5"  id='cosokham'>
                 <div className="row doctor-detail-box p-4 shadow">
                     <div className="col-md-4 text-center">
                     <a href={'doctor-detail?id='+selectedDoctor?.id}><img src={selectedDoctor?.user.avatar} alt={selectedDoctor?.fullName} className="img-fluid rounded doctor-main-img" /></a>

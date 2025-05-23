@@ -33,6 +33,9 @@ import ChiTietBaiViet from '../pages/public/chitietbaiviet'
 import DoctorDetail from '../pages/public/doctordetail'
 import Service from '../pages/public/service'
 import Blog from '../pages/public/blog'
+import ChuyenKhoa from '../pages/public/chuyenkhoa'
+import ChiTietChuyenKhoa from '../pages/public/chitietchuyenkhoa'
+import Doctors from '../pages/public/doctors'
 
 //customer
 import dangkytiemchung from "../pages/customer/dangkytiemchung";
@@ -54,6 +57,9 @@ const publicRoutes = [
     { path: "/doctor-detail", component: DoctorDetail },
     { path: "/services", component: Service },
     { path: "/blog", component: Blog },
+    { path: "/chuyenkhoa", component: ChuyenKhoa },
+    { path: "/chitietchuyenkhoa", component: ChiTietChuyenKhoa },
+    { path: "/doctors", component: Doctors },
     {path: "/login", component: login, layout: layoutLogin},
     {path: "/regis", component: regisPage, layout: layoutLogin},
     { path: "/confirm", component: confirmPage, layout: layoutLogin },

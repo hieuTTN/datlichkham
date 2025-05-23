@@ -20,6 +20,7 @@ function Header (){
 
   const [isCssLoaded, setCssLoaded] = useState(false);
   const [category, setCategory] = useState([]);
+  const [chuyenKhoa, setChuyenKhoa] = useState([]);
 
   useEffect(()=>{
 
@@ -30,6 +31,12 @@ function Header (){
         setCategory(result)
     };
     getCategory();
+    const getChuyenKhoa = async() =>{
+        var response = await getMethod('/api/specialty/public/find-all-list');
+        var result = await response.json();
+        setChuyenKhoa(result)
+    };
+    getChuyenKhoa();
   }, []);
 
   function logout(){
@@ -72,11 +79,23 @@ return(
       <div class="container-web container-bottom-header">
           <a href="/" class="itemheader">Trang chủ</a>
           <a href="" class="itemheader">Giới thiệu</a>
-          <a href="" class="itemheader">Chuyên khoa</a>
-          <a href="" class="itemheader">Cơ sở khám</a>
-          <a href="" class="itemheader">Đội ngũ bác sĩ</a>
+          <a href="/index#cosokham" class="itemheader">Cơ sở khám</a>
+          <a href="/doctors" class="itemheader">Đội ngũ bác sĩ</a>
           <a href="tra-cuu-lich-tiem" class="itemheader">Đăng ký khám</a>
           <a href="/services" class="itemheader">Bảng giá dịch vụ</a>
+          <div className="itemheader dropdown-news">
+            <a href="#" className="itemheader">Chuyên khoa</a>
+            <div className="dropdown-menu-news">
+              <a href={`/chuyenkhoa`} className="dropdown-item-news">
+                  Tất cả chuyên khoa
+              </a>
+              {chuyenKhoa.map((item, index) => (
+                <a key={index} href={`/chitietchuyenkhoa?id=${item.id}`} className="dropdown-item-news">
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </div>
           <div className="itemheader dropdown-news">
             <a href="#" className="itemheader">Tin tức</a>
             <div className="dropdown-menu-news">
