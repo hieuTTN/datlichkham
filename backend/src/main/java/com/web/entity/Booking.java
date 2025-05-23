@@ -25,6 +25,10 @@ public class Booking {
 
     private Time appointmentTime;
 
+    private Time startTime;
+
+    private Time endTime;
+
     private String fullName;
 
     private Date dob;

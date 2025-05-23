@@ -64,7 +64,7 @@ return(
                   </ul>
                   <div class="d-flex">
                       <a href="" class="itemheader itemtopheader"><i class="fa fa-map-marker"></i> Tìm cơ sở khám</a>
-                      <a href="/dang-ky-tiem-chung" class="itemheader itemtopheader"><i class="fa fa-calendar"></i> Đăng ký khám</a>
+                      <a href="/datlichkham" class="itemheader itemtopheader"><i class="fa fa-calendar"></i> Đăng ký khám</a>
                       <a href="tel:02871026595" class="itemheader itemtopheader hotlineheader">Hotline: 028 7102 6595</a>
                       {auth}
                   </div>
@@ -81,7 +81,7 @@ return(
           <a href="" class="itemheader">Giới thiệu</a>
           <a href="/index#cosokham" class="itemheader">Cơ sở khám</a>
           <a href="/doctors" class="itemheader">Đội ngũ bác sĩ</a>
-          <a href="tra-cuu-lich-tiem" class="itemheader">Đăng ký khám</a>
+          <a href="/datlichkham" class="itemheader">Đăng ký khám</a>
           <a href="/services" class="itemheader">Bảng giá dịch vụ</a>
           <div className="itemheader dropdown-news">
             <a href="#" className="itemheader">Chuyên khoa</a>

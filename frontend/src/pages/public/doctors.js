@@ -83,7 +83,7 @@ function Doctors(){
                                 <div className="card text-center h-100 shadow singlebslist">
                                     <a href={'doctor-detail?id='+item.id}><img src={item.user.avatar} className="imgdoctorlist"/></a>
                                     <div className="card-body">
-                                        <p className="text-muted mb-1">Bằng cấp: {item.degree}, Chuyên khoa: {item.specialty.name}</p>
+                                        <p className="text-muted mb-1">Trình độ: {item.degree}, Chuyên khoa: {item.specialty.name}</p>
                                         <h5><a className="text-success fw-bold" href={'doctor-detail?id='+item.id}>{item.fullName}</a></h5>
                                         <hr style={{ borderTop: "2px solid orange", width: "80%", margin: "auto" }} />
                                         <p className="mt-2">{item.position}</p>

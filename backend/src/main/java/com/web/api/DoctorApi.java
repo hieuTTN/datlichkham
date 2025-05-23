@@ -46,6 +46,18 @@ public class DoctorApi {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
+    @GetMapping("/public/search-all")
+    public ResponseEntity<?> findAllList(@RequestParam Long specialtyId, @RequestParam Long centerId){
+        List<Doctor> result = doctorService.searchDoctor(specialtyId, centerId);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @GetMapping("/public/search-all-list")
+    public ResponseEntity<?> findAllListNotParam(){
+        List<Doctor> result = doctorService.searchAllDoctor();
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
     @GetMapping("/public/get-cd")
     public ResponseEntity<?> findAllList(){
         List<Doctor> result = doctorService.doctors();

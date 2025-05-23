@@ -126,4 +126,12 @@ public class DoctorService {
     public List<Doctor> doctors() {
         return doctorRepository.haveCD();
     }
+
+    public List<Doctor> searchDoctor(Long specialtyId, Long centerId) {
+        return doctorRepository.findByTTAndCK(centerId, specialtyId);
+    }
+
+    public List<Doctor> searchAllDoctor() {
+        return doctorRepository.findAll();
+    }
 }

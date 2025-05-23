@@ -1152,3 +1152,41 @@ body{
     width: 100%;
     object-fit: cover;
 }
+.imgdoctorlistdl{
+    border-radius: 8px;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+.positionbsdl{
+    font-size: 12px;
+}
+.activedoctordl{
+    border: 2px solid red;
+}
+.timetable{
+    padding: 0.5rem 1rem; 
+    border: 1px solid #808080; 
+    background-color: #c7c7c7;
+    cursor: pointer;
+}
+.timetableactive{
+     padding: 0.5rem 1rem; border: 1px solid rgb(40, 167, 69); background-color: rgb(212, 237, 218); cursor: pointer;
+}
+.pricebsdl{
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+}
+.lb-form{
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.luuydatlich{
+ display: block;
+ color: #757575;
+ margin-top: 10px;
+ margin-bottom: 10px;
+}

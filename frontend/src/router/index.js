@@ -38,7 +38,7 @@ import ChiTietChuyenKhoa from '../pages/public/chitietchuyenkhoa'
 import Doctors from '../pages/public/doctors'
 
 //customer
-import dangkytiemchung from "../pages/customer/dangkytiemchung";
+import DatLichKham from "../pages/customer/datlichkham";
 import taikhoan from "../pages/customer/taikhoan";
 import thongbao from "../pages/customer/thongbao";
 import XacNhanDangky from "../pages/customer/xacnhandangky";
@@ -68,7 +68,7 @@ const publicRoutes = [
 ];
 
 const customerRoutes = [
-    {path: "/dang-ky-tiem-chung", component: dangkytiemchung},
+    {path: "/datlichkham", component: DatLichKham},
     {path: "/tai-khoan", component: taikhoan},
     {path: "/thong-bao", component: thongbao},
     {path: "/xac-nhan-dang-ky", component: XacNhanDangky},

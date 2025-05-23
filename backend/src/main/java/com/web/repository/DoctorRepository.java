@@ -18,4 +18,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @Query("select d from Doctor d where d.position is not null and d.position <> ''")
     List<Doctor> haveCD();
+
+    @Query("select d from Doctor d where d.center.id = ?1 and d.specialty.id = ?2")
+    List<Doctor> findByTTAndCK(Long centerId, Long specialtyId);
 }
