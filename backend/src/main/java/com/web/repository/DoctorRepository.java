@@ -21,4 +21,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @Query("select d from Doctor d where d.center.id = ?1 and d.specialty.id = ?2")
     List<Doctor> findByTTAndCK(Long centerId, Long specialtyId);
+
+    @Query("select d from Doctor d where d.user.id = ?1")
+    Doctor findByUserId(Long id);
 }

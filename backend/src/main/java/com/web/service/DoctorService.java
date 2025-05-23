@@ -6,6 +6,7 @@ import com.web.enums.UserType;
 import com.web.exception.MessageException;
 import com.web.repository.*;
 import com.web.utils.Contains;
+import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +38,9 @@ public class DoctorService {
 
     @Autowired
     private CenterRepository centerRepository;
+
+    @Autowired
+    private UserUtils userUtils;
 
     @Transactional
     public DoctorDTO saveOrUpdateDoctor(DoctorDTO dto) {
@@ -133,5 +137,10 @@ public class DoctorService {
 
     public List<Doctor> searchAllDoctor() {
         return doctorRepository.findAll();
+    }
+
+    public Doctor myInfor() {
+        User user = userUtils.getUserWithAuthority();
+        return doctorRepository.findByUserId(user.getId());
     }
 }

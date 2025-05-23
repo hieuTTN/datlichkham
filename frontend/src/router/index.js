@@ -1,4 +1,5 @@
 import layoutAdmin from "../layout/admin/Layout";
+import doctorAdmin from "../layout/doctor/Layout";
 import layoutLogin from "../layout/customer/loginlayout/login";
 import layoutStaff from "../layout/staff/Layout";
 
@@ -20,6 +21,7 @@ import AdminDoctor from '../pages/admin/doctor'
 import AdminAddDoctor from '../pages/admin/adddoctor'
 import AdminDoctorDate from '../pages/admin/doctordate'
 import AdminAddDoctorDate from '../pages/admin/adddoctordate'
+import AdminLichDat from '../pages/admin/lichdat'
 
 
 //public
@@ -43,12 +45,18 @@ import taikhoan from "../pages/customer/taikhoan";
 import thongbao from "../pages/customer/thongbao";
 import XacNhanDangky from "../pages/customer/xacnhandangky";
 import ThanhCong from "../pages/customer/thanhcong";
+import PublicPayment from "../pages/customer/checkpayment";
 
 //staff
 import StaffChat from "../pages/staff/chat";
 import Vaccine from "../pages/staff/vaccine/vaccine";
 import VaccineInventory from "../pages/staff/vaccineInventory/VaccineInventory";
 import CustomerSchedule from "../pages/staff/customerSchedule/CustomerSchedule";
+
+//doctor
+import DoctorBooking from "../pages/doctor/mybooking";
+import LichLamViec from "../pages/doctor/lichlamviec";
+import EditBookingDetail from "../pages/doctor/editbookingdetail";
 
 const publicRoutes = [
     {path: "/", component: index},
@@ -72,7 +80,7 @@ const customerRoutes = [
     {path: "/tai-khoan", component: taikhoan},
     {path: "/thong-bao", component: thongbao},
     {path: "/xac-nhan-dang-ky", component: XacNhanDangky},
-    {path: "/thanh-cong", component: ThanhCong},
+    {path: "/checkpayment", component: PublicPayment},
 ];
 
 
@@ -94,6 +102,7 @@ const adminRoutes = [
     { path: "/admin/add-doctor", component: AdminAddDoctor, layout: layoutAdmin },
     { path: "/admin/doctordate", component: AdminDoctorDate, layout: layoutAdmin },
     { path: "/admin/adddoctordate", component: AdminAddDoctorDate, layout: layoutAdmin },
+    { path: "/admin/lichdat", component: AdminLichDat, layout: layoutAdmin },
 ];
 
 
@@ -104,6 +113,12 @@ const staffRoutes = [
     {path: "/staff/customer-schedule", component: CustomerSchedule, layout: layoutStaff},
 ];
 
+const doctorRoutes = [
+    { path: "/doctor/mybooking", component: DoctorBooking, layout: doctorAdmin },
+    { path: "/doctor/lichlamviec", component: LichLamViec, layout: doctorAdmin },
+    { path: "/doctor/editbookingdetail", component: EditBookingDetail, layout: doctorAdmin },
+]
 
 
-export {publicRoutes, adminRoutes, customerRoutes, staffRoutes};
+
+export {publicRoutes, adminRoutes, customerRoutes, staffRoutes, doctorRoutes};

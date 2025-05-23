@@ -4,6 +4,7 @@ import com.web.dto.request.BookingDto;
 import com.web.entity.Booking;
 import com.web.entity.Doctor;
 import com.web.entity.DoctorTime;
+import com.web.entity.User;
 import com.web.enums.PayStatus;
 import com.web.exception.MessageException;
 import com.web.repository.BookingRepository;
@@ -12,8 +13,11 @@ import com.web.repository.DoctorTimeRepository;
 import com.web.utils.UserUtils;
 import com.web.vnpay.VNPayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Service
@@ -44,6 +48,7 @@ public class BookingService {
         Booking booking = new Booking();
         booking.setPhone(dto.getPhone());
         booking.setUser(userUtils.getUserWithAuthority());
+        booking.setFullName(dto.getFullName());
         booking.setCreatedDate(LocalDateTime.now());
         booking.setPayStatus(PayStatus.DA_THANH_TOAN_KHAM);
         booking.setAddress(dto.getAddress());
@@ -60,4 +65,28 @@ public class BookingService {
         return booking;
     }
 
+    public Page<Booking> myBookingDoctor(Pageable pageable) {
+        User user = userUtils.getUserWithAuthority();
+        Doctor doctor = doctorRepository.findByUserId(user.getId());
+        Page<Booking> bookings = bookingRepository.findByDoctor(doctor.getId(), pageable);
+        return bookings;
+    }
+
+    public Page<Booking> allBooking(Date start, Date end, Pageable pageable) {
+        Page<Booking> page = null;
+        if(start == null || end == null){
+            page = bookingRepository.findAll(pageable);
+        }
+        else{
+            page = bookingRepository.findByDate(start, end, pageable);
+        }
+        return page;
+    }
+
+    public Booking updateStatus(Long id, PayStatus payStatus) {
+        Booking booking = bookingRepository.findById(id).get();
+        booking.setPayStatus(payStatus);
+        bookingRepository.save(booking);
+        return booking;
+    }
 }

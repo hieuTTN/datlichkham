@@ -124,6 +124,11 @@ public class UserApi {
         System.out.println("user");
     }
 
+    @GetMapping("/doctor/check-role-doctor")
+    public void checkRoleDoctor(){
+        System.out.println("doctor");
+    }
+
     @PostMapping("/admin/lockOrUnlockUser")
     public void activeOrUnactiveUser(@RequestParam("id") Long id){
         User user = userRepository.findById(id).get();

@@ -28,9 +28,8 @@ function Header({ children }){
      
     const [isCssLoaded, setCssLoaded] = useState(false);
     useEffect(()=>{
-        checkAdmin();
+        checkDoctor();
         import('../admin/layout.scss').then(() => setCssLoaded(true));
-        getCountNoti();
 
         var userlc = localStorage.getItem("user")
         var email = JSON.parse(userlc).email
@@ -109,107 +108,23 @@ function Header({ children }){
                         <i class="fa fa-home fa-fw"></i> Trang chủ
                     </a>
                 </li>
-                <li className={isActive(["/admin/user"])}>
+                <li className={isActive(["/doctor/mybooking"])}>
                     <a href="#coltaikhoan" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-user fa-fw"></i> Tài khoản
+                        <i class="fa fa-clock fa-fw"></i> Lịch đặt
                     </a>
                     <ul class="collapse list-unstyleds" id="coltaikhoan">
                         <li class="nav-item">
-                            <a href="user" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách tài khoản</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm tài khoản</a>
+                            <a href="/doctor/mybooking" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Lịch đặt bệnh nhân</a>
                         </li>
                     </ul>
                 </li>
-                <li className={isActive(["/admin/blog", "/admin/add-blog"])}>
-                    <a href="#colbaiviet" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-newspaper fa-fw"></i> Bài viết
+                <li className={isActive(["/doctor/lichlamviec"])}>
+                    <a href="#collichlamviec" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
+                        <i class="fa fa-calendar-alt fa-fw"></i> Lịch làm việc
                     </a>
-                    <ul class="collapse list-unstyleds" id="colbaiviet">
+                    <ul class="collapse list-unstyleds" id="collichlamviec">
                         <li class="nav-item">
-                            <a href="blog" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách tin đăng</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="add-blog" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm bài viết</a>
-                        </li>
-                    </ul>
-                </li>
-                <li className={isActive(["/admin/category"])}>
-                    <a href="category" class="text-white text-decoration-none">
-                        <i class="fa fa-list fa-fw"></i> Danh mục
-                    </a>
-                </li>
-                <li className={isActive(["/admin/center", "/admin/add-center"])}>
-                    <a href="#dashboardSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-hospital fa-fw"></i> Cơ sở khám
-                    </a>
-                    <ul class="collapse list-unstyleds" id="dashboardSubmenu">
-                        <li class="nav-item">
-                            <a href="center" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách cơ sở khám</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="add-center" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm cơ sở khám</a>
-                        </li>
-                    </ul>
-                </li>
-                <li className={isActive(["/admin/specialty", "/admin/add-specialty"])}>
-                    <a href="#specialty" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-syringe fa-fw"></i> Chuyên khoa
-                    </a>
-                    <ul class="collapse list-unstyleds" id="specialty">
-                        <li class="nav-item">
-                            <a href="specialty" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách chuyên khoa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="add-specialty" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm chuyên khoa</a>
-                        </li>
-                    </ul>
-                </li>
-                <li className={isActive(["/admin/service", "/admin/add-service"])}>
-                    <a href="#dichvukham" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa fa-heartbeat fa-fw"></i> Dịch vụ khám
-                    </a>
-                    <ul class="collapse list-unstyleds" id="dichvukham">
-                        <li class="nav-item">
-                            <a href="service" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách dịch vụ khám</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="add-service" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm dịch vụ khám</a>
-                        </li>
-                    </ul>
-                </li>
-                <li className={isActive(["/admin/lichdat"])}>
-                    <a href="lichdat" class="text-white text-decoration-none">
-                        <i class="fa fa-clock"></i> Lịch khám đã đặt
-                    </a>
-                </li>
-                <li className={isActive(["/admin/doctor", "/admin/add-doctor", "/admin/adddoctordate","/admin/doctordate"])}>
-                    <a href="#bacsy" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa-solid fa-user-doctor fa-fw"></i> Bác sỹ
-                    </a>
-                    <ul class="collapse list-unstyleds" id="bacsy">
-                        <li class="nav-item">
-                            <a href="doctor" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Danh sách bác sỹ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="add-doctor" class="text-white text-decoration-none ps-4"><i class="fa fa-plus"></i> Thêm bác sỹ</a>
-                        </li>
-                    </ul>
-                </li>
-                <li className={isActive(["/admin/history-pay", "/admin/deduction-history","/admin/thong-ke"])}>
-                    <a href="#dashboardSubmenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white text-decoration-none">
-                        <i class="fa-solid fa-chart-line fa-fw"></i> Thống kê
-                    </a>
-                    <ul class="collapse list-unstyleds" id="dashboardSubmenu1">
-                        <li class="nav-item">
-                            <a href="history-pay" class="text-white text-decoration-none ps-4"><i class="fa fa-clock"></i> Lịch sử nạp tiền</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="deduction-history" class="text-white text-decoration-none ps-4"><i class="fa fa-clock"></i> Lịch sử trừ tiền</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="thong-ke" class="text-white text-decoration-none ps-4"><i class="fa fa-chart-line"></i> Thống kê</a>
+                            <a href="lichlamviec" class="text-white text-decoration-none ps-4"><i class="fa fa-list"></i> Lịch làm việc của tôi</a>
                         </li>
                     </ul>
                 </li>
@@ -268,8 +183,8 @@ function Header({ children }){
     );
 }
 
-async function checkAdmin(){
-    const response = await getMethod('/api/user/admin/check-role-admin')
+async function checkDoctor(){
+    const response = await getMethod('/api/user/doctor/check-role-doctor')
     if (response.status > 300) {
         window.location.replace('../login')
     }

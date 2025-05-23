@@ -46,7 +46,7 @@ async function processLogin(user, token) {
         window.location.href = '/index';
     }
     if (user.authorities.name === "ROLE_DOCTOR") {
-        
+        window.location.href = '/doctor/mybooking';
     }
 }
 

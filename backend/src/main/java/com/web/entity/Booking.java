@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.web.enums.PayStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "booking")
@@ -53,4 +55,19 @@ public class Booking {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties(value = {"booking"})
+    private List<BookingDetail> bookingDetails;
+
+    @Transient
+    private Double tongTien = 0D;
+
+    public Double getTongTien() {
+        Double total = 0D;
+        for(BookingDetail b : bookingDetails){
+            total += b.getPrice();
+        }
+        return total;
+    }
 }

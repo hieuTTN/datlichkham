@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import {Routes, Route,BrowserRouter as Router} from 'react-router-dom'
 import DefaultLayout from './layout/customer/defaultLayout/defaultLayout'
-import { publicRoutes, adminRoutes, customerRoutes, staffRoutes } from './router/index';
+import { publicRoutes, adminRoutes, customerRoutes, staffRoutes, doctorRoutes } from './router/index';
 import AdminLayout from './layout/admin/Layout'
 import "./App.css"
 
@@ -44,6 +44,16 @@ function App() {
             })}
 
             {staffRoutes.map((route, index) => {
+              const Layout = route.layout
+              const Page = route.component
+              return <Route key={index} path={route.path} element={
+                <Layout>
+                  <Page/>
+                </Layout>
+              }/>
+            })}
+
+            {doctorRoutes.map((route, index) => {
               const Layout = route.layout
               const Page = route.component
               return <Route key={index} path={route.path} element={

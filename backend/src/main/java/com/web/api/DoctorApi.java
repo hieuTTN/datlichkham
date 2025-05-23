@@ -69,4 +69,10 @@ public class DoctorApi {
         Doctor result = doctorService.findById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/doctor/my-infor")
+    public ResponseEntity<?> myInfor(){
+        Doctor result = doctorService.myInfor();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

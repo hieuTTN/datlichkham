@@ -6,9 +6,11 @@ import com.web.dto.response.DoctorScheduleDTO;
 import com.web.entity.Doctor;
 import com.web.entity.DoctorDate;
 import com.web.entity.DoctorTime;
+import com.web.entity.User;
 import com.web.repository.DoctorDateRepository;
 import com.web.repository.DoctorRepository;
 import com.web.repository.DoctorTimeRepository;
+import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,9 @@ public class DoctorDateService {
 
     @Autowired
     private DoctorTimeRepository doctorTimeRepository;
+
+    @Autowired
+    private UserUtils userUtils;
 
     @Transactional
     public void saveOrUpdateSchedule(DoctorScheduleDTO dto) {
@@ -149,4 +154,12 @@ public class DoctorDateService {
     public List<DoctorDate> findByDoctor(Long doctorId) {
         return doctorDateRepository.findByDoctorId(doctorId);
     }
+
+    public List<DoctorDate> findByDoctor() {
+        User user = userUtils.getUserWithAuthority();
+        Doctor doctor = doctorRepository.findByUserId(user.getId());
+        return doctorDateRepository.findByDoctorId(doctor.getId());
+    }
+
+
 }

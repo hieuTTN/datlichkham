@@ -37,6 +37,12 @@ public class DoctorDateApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/doctor/my-doctorDate")
+    public ResponseEntity<?> myDoctorDate(){
+        List<DoctorDate> result = doctorDateService.findByDoctor();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @DeleteMapping("/admin/date/{id}")
     public ResponseEntity<?> deleteDoctorDate(@PathVariable Long id) {
         doctorDateService.deleteDoctorDate(id);
