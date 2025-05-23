@@ -125,6 +125,7 @@ function DatLichKham() {
     event.preventDefault();
     var obj = {
       "fullName":event.target.elements.fullname.value,
+      "appointmentDate":date,
       "email":event.target.elements.email.value,
       "phone":event.target.elements.phone.value,
       "gender":event.target.elements.gioitinh.value,
