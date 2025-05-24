@@ -10,6 +10,7 @@ import com.web.exception.MessageException;
 import com.web.repository.BookingRepository;
 import com.web.repository.DoctorRepository;
 import com.web.repository.DoctorTimeRepository;
+import com.web.utils.MailService;
 import com.web.utils.UserUtils;
 import com.web.vnpay.VNPayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class BookingService {
     @Autowired
     private UserUtils userUtils;
 
+    @Autowired
+    private MailService mailService;
+
     public Booking create(BookingDto dto){
         int paymentStatus = vnPayService.orderReturnByUrl(dto.getUrlVnpay());
         if(paymentStatus != 1){
@@ -61,7 +65,9 @@ public class BookingService {
         booking.setDoctor(doctor);
         booking.setServiceFee(0D);
         bookingRepository.save(booking);
-
+        User user = userUtils.getUserWithAuthority();
+        mailService.sendEmail(user.getEmail(), "Đặt lịch khám thành công","Cảm ơn bạn đã đặt lịch khám tại bệnh viện<br>" +
+                "Lịch khám của bạn vào ngày "+booking.getAppointmentDate().toString()+", lúc: "+booking.getStartTime().toString()+" đển "+booking.getEndTime().toString(), false, true);
         return booking;
     }
 

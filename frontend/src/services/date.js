@@ -17,4 +17,10 @@ function formatTime(time){
   return arr[0]+":"+arr[1];
 }
 
-export {formatTimestamp,formatTime}
+
+function formatDate(dateStr){
+  const [year, month, day] = dateStr.split("-");
+  return `${day}-${month}-${year}`;
+}
+
+export {formatTimestamp,formatTime,formatDate}

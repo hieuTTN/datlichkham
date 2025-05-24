@@ -71,7 +71,7 @@ const AdminDoctorDate = ()=>{
                             {items.map((item=>{
                                     return  <tr>
                                     <td>{item.id}</td>
-                                    <td><strong>Thứ: {item.dayOfWeek}</strong></td>
+                                    <td><strong>Thứ: {item.dayOfWeek + 1}</strong></td>
                                     <td>
                                         <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", gap: "10px" }}>
 

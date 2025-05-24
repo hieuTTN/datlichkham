@@ -23,7 +23,7 @@ public class BookingReminderScheduler {
 
     // Chạy mỗi ngày lúc 8:16 sáng
     // thứ tự: giây - phút - giờ - ngày - tháng - thứ
-    @Scheduled(cron = "0 16 8 * * *")
+    @Scheduled(cron = "0 10 10 * * *")
     public void sendAppointmentReminders() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
 

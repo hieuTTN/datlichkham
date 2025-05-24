@@ -10,7 +10,7 @@ function DefaultLayout({children}){
             {children}
             </div>
             <Footer/>
-            <ChatFrame/>
+            {/* <ChatFrame/> */}
         </div>
     );
 }

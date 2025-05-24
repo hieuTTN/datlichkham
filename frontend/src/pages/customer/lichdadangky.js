@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 import {toast } from 'react-toastify';
 import Select from 'react-select';
 import {getMethod, postMethod, postMethodPayload} from '../../services/request';
-import { formatTime} from '../../services/date';
+import { formatTime,formatDate} from '../../services/date';
 import { formatMoney } from '../../services/money';
 import { Button, Card, Col, DatePicker, Input, Pagination, Row, Table } from "antd";
 
@@ -75,10 +75,10 @@ function LichDaDangKy(){
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Giờ khám</th>
+                                <th className='col-150'>Giờ khám</th>
                                 <th>Bác sỹ</th>
                                 <th>Thông tin</th>
-                                <th>Ngày sinh</th>
+                                <th className='col-150'>Ngày sinh</th>
                                 <th>Mô tả bệnh</th>
                                 <th class="sticky-col">Hành động</th>
                             </tr>
@@ -87,12 +87,12 @@ function LichDaDangKy(){
                             {items.map((item=>{
                                     return  <tr>
                                     <td>{item.id}</td>
-                                    <td>{formatTime(item.startTime)} - {formatTime(item.endTime)}<br/><strong>{item.appointmentDate}</strong></td>
+                                    <td className='col-150'>{formatTime(item.startTime)} - {formatTime(item.endTime)}<br/><strong>{formatDate(item.appointmentDate)}</strong></td>
                                     <td>{item.doctor.fullName}<br/>Chuyên khoa: {item.doctor.specialty.name}</td>
                                     <td>Họ tên: <strong>{item.fullName == null ?item.user.fullname:item.fullName}</strong><br/>
                                         Số điện thoại: <strong>{item.phone}</strong>
                                     </td>
-                                    <td>{item.dob}</td>
+                                    <td className='col-150'>{formatDate(item.dob)}</td>
                                     <td>{item.diseaseDescription}</td>
                                     <td class="sticky-col  d-flex">
                                         <button onClick={()=>setBooking(item)} data-bs-toggle="modal" data-bs-target="#exampleModal" className='edit-btn' title='dịch vụ khám'><i className='fa fa-list'></i></button>

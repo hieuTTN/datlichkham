@@ -84,6 +84,7 @@ public class UserService {
         user.setActivation_key(userUtils.randomKey());
         Authority authority = authorityRepository.findById(Contains.ROLE_USER).get();
         user.setAuthorities(authority);
+        user.setUserType(UserType.EMAIL);
         User result = userRepository.save(user);
         mailService.sendEmail(user.getEmail(), "Xác nhận tài khoản của bạn","Cảm ơn bạn đã tin tưởng và xử dụng dịch vụ của chúng tôi:<br>" +
                 "Để kích hoạt tài khoản của bạn, hãy nhập mã xác nhận bên dưới để xác thực tài khoản của bạn<br><br>" +
