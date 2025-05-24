@@ -6,282 +6,99 @@ import ReactPaginate from 'react-paginate';
 import {toast } from 'react-toastify';
 import Select from 'react-select';
 import {getMethod, postMethod, postMethodPayload} from '../../services/request';
-import Swal from 'sweetalert2'
-import StarRating from './star';
-import momo from '../../assest/images/momo.webp';
-import vnpay from '../../assest/images/vnpay.jpg';
+import { formatTime} from '../../services/date';
 import { formatMoney } from '../../services/money';
-import DoiLich from './doilich'
+import { Button, Card, Col, DatePicker, Input, Pagination, Row, Table } from "antd";
 
 
 var size = 3
 var url = '';
+const { RangePicker } = DatePicker;
 function LichDaDangKy(){
-    const [customerSchedule, setCustomerSchedule] = useState([]);
-    const [schedule, setSchedule] = useState(null);
-    const [rating, setRating] = useState(1);
-    const [doctors, setDoctors] = useState([]);
-    const [nurses, setNurses] = useState([]);
+    const [items, setItems] = useState([]);
     const [pageCount, setpageCount] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [item, setItem] = useState(null);
+    const [details, setDetails] = useState([]);
+    const [from, setFrom] = useState('');
+    const [to, setTo] = useState('');
+    const [booking, setBooking] = useState(null);
 
     useEffect(()=>{
-        const getItem= async() =>{
-            var response = await getMethod('/api/customer-schedule/customer/my-schedule?&size='+size+'&sort=id,desc&page='+0);
-            var result = await response.json();
-            
-            setCustomerSchedule(result.content)
-            
-            setpageCount(result.totalPages)
-            url = '/api/customer-schedule/customer/my-schedule?&size='+size+'&sort=id,desc&page='
-        };
-        getItem();
-        const getDoctor= async() =>{
-            var response = await getMethod('/api/doctor/public/find-all');
-            var result = await response.json();
-            setDoctors(result)
-        };
-        getDoctor();
-        const getNurse= async() =>{
-            var response = await getMethod('/api/nurse/public/find-all');
-            var result = await response.json();
-            setNurses(result)
-        };
-        getNurse();
+        getData();
     }, []);
   
-    async function huyTiem(id) {
-        var con = window.confirm("Xác nhận hủy tiêm?");
-        if(con == false){
-            return;
+    const getData= async() =>{
+        var uls = `/api/booking/user/my-booking?size=${size}&sort=id,desc`
+        if(from != '' && to != ''){
+            uls += '&start='+from+'&end='+to
         }
-        var res = await postMethod('/api/customer-schedule/customer/cancel?id='+id)
-        if (res.status < 300) {
-            toast.success("Đã hủy lịch tiêm thành công!")
-            var response = await getMethod('/api/customer-schedule/customer/my-schedule?&size='+size+'&sort=id,desc&page='+0);
-            var result = await response.json();
-            setCustomerSchedule(result.content)
-            setpageCount(result.totalPages)
-            url = '/api/customer-schedule/customer/my-schedule?&size='+size+'&sort=id,desc&page='
-        } else {
-            if(res.status == 417){
-                var result = await res.json();
-                toast.error(result.defaultMessage);
-            }
-            else{
-                toast.error("Hủy lịch tiêm thất bại");
-            }
-        }
-    }
-
-
-    const handleRatingSelect = (ratingValue) => {
-        setRating(ratingValue);
-        console.log('Rating được chọn:', ratingValue);
+        uls += '&page=';
+        var response = await getMethod(uls+0);
+        var result = await response.json();
+        setItems(result.content)
+        setpageCount(result.totalPages)
+        url = uls;
     };
-
-    async function taoPhanHoi(event) {
-        event.preventDefault();
-        var phanhoi = {
-            "content": event.target.elements.noidungph.value,
-            "rating": rating,
-            "customerSchedule": {"id":schedule.id},
-            "doctor": {"id":event.target.elements.doctor.value},
-            "nurse": {"id":event.target.elements.yta.value},
-        }
-        if(event.target.elements.doctor.value == ''){
-            phanhoi.doctor = null
-        }
-        if(event.target.elements.yta.value == ''){
-            phanhoi.nurse = null
-        }
-        var res = await postMethodPayload('/api/feedback/customer/create', phanhoi)
-        if (res.status < 300) {
-            toast.success("Đã gửi phản hồi thành công");
-        } else {
-            toast.error("Hành hộng thất bại");
-        }
-    }
 
     const handlePageClick = async (data)=>{
         var currentPage = data.selected
         var response = await getMethod(url+currentPage)
         var result = await response.json();
-        setCustomerSchedule(result.content)
-        setpageCount(result.totalPages)
-        setCurrentPage(currentPage);
-    }
-
-    async function filterLichDangKy(){
-        var search = document.getElementById("search").value
-        var from = document.getElementById("from").value
-        var to = document.getElementById("to").value
-        var curUrl = '/api/customer-schedule/customer/my-schedule?&size='+size+'&sort=id,desc';
-        if(search != ""){
-            curUrl += '&search='+search;
-        }
-        if(from != ""){
-            curUrl += '&from='+from;
-        }
-        if(to != ""){
-            curUrl += '&to='+to;
-        }
-        curUrl += '&page=';
-        url = curUrl
-        var response = await getMethod(curUrl+0)
-        var result = await response.json();
-        setCustomerSchedule(result.content)
+        setItems(result.content)
         setpageCount(result.totalPages)
     }
-    async function loadDuLieu(){
-        url = '/api/customer-schedule/customer/my-schedule?&size='+size+'&sort=id,desc&page=';
-        var response = await getMethod(url+0)
-        var result = await response.json();
-        setCustomerSchedule(result.content)
-        setpageCount(result.totalPages)
-        document.getElementById("search").value = ""
-        document.getElementById("from").value = ""
-        document.getElementById("to").value = "";
+
+    function onDateChange(dates, dateStrings){
+        setFrom(dateStrings[0])
+        setTo(dateStrings[1])
     }
-
-    
-    function momoClick(){
-        document.getElementById("momo").click()
-    }
-
-    function vnpayClick(){
-        document.getElementById("vnpay").click()
-    }
-
-    async function dangKyTiem(event) {
-        event.preventDefault();
-        var con = window.confirm("Xác nhận thanh toán lịch tiêm");
-        if(con == false){
-            return;
-        }
-        var paytype = event.target.elements.paytype.value
-        if (paytype == "momo") {
-            requestPayMent(event,"momo")
-        }
-        if (paytype == "vnpay") {
-            requestPayMent(event,"vnpay")
-        }
-    };
-
-    async function requestPayMent(event, type) {
-        event.preventDefault();
-        const hostname = window.location.hostname;
-        const port = window.location.port;         
-        const protocol = window.location.protocol;
-        const urlmain = `${protocol}//${hostname}:${port}`;
-        var returnurl = urlmain+'/thanh-cong';
-        var paymentDto = {
-            "content": "Thanh toán",
-            "returnUrl": returnurl,
-            "notifyUrl": returnurl,
-            "idScheduleTime": item.vaccineScheduleTime.id,
-        }
-        localStorage.setItem("customerschedule", item.id);
-        var url = '/api/vnpay/urlpayment';
-        if(type == "momo"){
-            url = '/api/momo/create-url-payment';
-        }
-        const res = await postMethodPayload(url, paymentDto)
-        var result = await res.json();
-        if (res.status < 300) {
-            window.open(result.url, '_blank');
-        }
-        if (res.status == 417) {
-            toast.warning(result.defaultMessage);
-        }
-    
-    }
-
-
-
     
     return(
         <>
+            <div class="headerpageadmin d-flex justify-content-between align-items-center p-3 bg-light border">
+                <strong class="text-left"><i className='fa fa-users'></i> Quản Lý Lịch Đặt</strong>
+                <div class="search-wrapper d-flex align-items-center">
+                    <RangePicker
+                        style={{ width: "100%" }}
+                        format="YYYY-MM-DD"
+                        placeholder={["Từ ngày", "Đến ngày"]}
+                        onChange={onDateChange}
+                    />
+                    <button onClick={()=>getData()} className='btn btn-primary ms-2'><i class="fa fa-search"></i> </button>
+                </div>
+            </div>
             <div class="tablediv">
                 <div class="headertable">
-                    <span class="lbtable">Danh sách lịch tiêm chủng đã đăng ký</span>
-                    <div className='row'>
-                        <div className='col-sm-3'>
-                            <label dangerouslySetInnerHTML={{__html:'&ThinSpace;'}}></label>
-                            <input id='search' className='form-control' placeholder='Tìm kiếm tên vaccine '/>
-                        </div>
-                        <div className='col-sm-3'>
-                            <label>Từ ngày</label>
-                            <input id='from' className='form-control' type='date'/>
-                        </div>
-                        <div className='col-sm-3'>
-                            <label>Đến ngày</label>
-                            <input id='to' className='form-control' type='date'/>
-                        </div>
-                        <div className='col-sm-2'>
-                            <label dangerouslySetInnerHTML={{__html:'&ThinSpace;'}}></label>
-                           <button onClick={filterLichDangKy} className='form-control btn btn-primary btncommont'>Lọc</button>
-                        </div>
-                        <div className='col-sm-1'>
-                        <label dangerouslySetInnerHTML={{__html:'&ThinSpace;'}}></label>
-                           <button onClick={loadDuLieu}  className='form-control btn btn-primary btncommont'><i class="fa fa-refresh"></i></button>
-                        </div>
-                    </div>
+                    <span class="lbtable">Danh sách lịch đặt</span>
                 </div>
                 <div class="divcontenttable">
-                    <table id="example" class="table table-bordered">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Mã đăng ký</th>
-                                <th>Vacxin</th>
-                                <th>Trung tâm</th>
-                                <th>Ngày đăng ký</th>
-                                <th>Ngày tiêm</th>
-                                <th>Thanh toán</th>
-                                <th>Trạng thái</th>
-                                <th>Chức năng</th>
-                                <th>Phản hồi</th>
-                                <th>Hủy lịch</th>
+                                <th>Id</th>
+                                <th>Giờ khám</th>
+                                <th>Bác sỹ</th>
+                                <th>Thông tin</th>
+                                <th>Ngày sinh</th>
+                                <th>Mô tả bệnh</th>
+                                <th class="sticky-col">Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {customerSchedule.map((item, index)=>{
-                            const currentDate = new Date();
-                            const targetDate = new Date(item.vaccineScheduleTime.injectDate);
-                            var checked = false;
-                            if (currentDate.getTime() >= targetDate.getTime()) {
-                                checked = true;
-                            }
-                            return <tr>
-                                <td>{item.id}</td>
-                                <td>{item.vaccineScheduleTime.vaccineSchedule.vaccine.name}</td>
-                                <td>{item.vaccineScheduleTime.vaccineSchedule.center.centerName}</td>
-                                <td>{item.createdDate.split(".")[0]}</td>
-                                <td>{item.vaccineScheduleTime.start} - {item.vaccineScheduleTime.end}<br/>Ngày tiêm: {item.vaccineScheduleTime.injectDate}</td>
-                                <td>{item.customerSchedulePay == 'CHUA_THANH_TOAN'?'Chưa thanh toán':'Đã thanh toán'}</td>
-                                <td>{item.statusCustomerSchedule}</td>
-                                <td>
-                                    {
-                                    item.customerSchedulePay == 'CHUA_THANH_TOAN'?
-                                    <button onClick={()=>setItem(item)} data-bs-toggle="modal" data-bs-target="#modelthanhtoan" className='btn btn-primary btncommont'>Thanh toán</button>:
-                                    <button onClick={()=>setItem(item)} data-bs-toggle="modal" data-bs-target="#modeldoilich" className='btn btn-primary btncommont'>Đổi lịch</button>
-                                    }
-                                </td>
-                                <td>
-                                    {
-                                    item.statusCustomerSchedule == 'confirmed'?
-                                    <button onClick={()=>setSchedule(item)} data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary btncommont'>Gửi</button>:<></>
-                                    }
-                                </td>
-                                <td>
-                                    {
-                                    item.statusCustomerSchedule != 'cancelled' && item.statusCustomerSchedule != 'finished' && checked == false?
-                                    <button onClick={()=>huyTiem(item.id)} className='btn btn-danger'>Hủy</button>:<></>
-                                    }
-                                </td>
-                            </tr>
-                         })}
+                            {items.map((item=>{
+                                    return  <tr>
+                                    <td>{item.id}</td>
+                                    <td>{formatTime(item.startTime)} - {formatTime(item.endTime)}<br/><strong>{item.appointmentDate}</strong></td>
+                                    <td>{item.doctor.fullName}<br/>Chuyên khoa: {item.doctor.specialty.name}</td>
+                                    <td>Họ tên: <strong>{item.fullName == null ?item.user.fullname:item.fullName}</strong><br/>
+                                        Số điện thoại: <strong>{item.phone}</strong>
+                                    </td>
+                                    <td>{item.dob}</td>
+                                    <td>{item.diseaseDescription}</td>
+                                    <td class="sticky-col  d-flex">
+                                        <button onClick={()=>setBooking(item)} data-bs-toggle="modal" data-bs-target="#exampleModal" className='edit-btn' title='dịch vụ khám'><i className='fa fa-list'></i></button>
+                                    </td>
+                                </tr>
+                            }))}
                         </tbody>
                     </table>
                     <ReactPaginate 
@@ -301,76 +118,42 @@ function LichDaDangKy(){
                         nextLabel='Trang sau'
                         activeClassName='active'/>
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Gửi phản hổi</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form onSubmit={taoPhanHoi} method='post'>
-                                <label className='lb-form-dky-tiem'><span>*</span> Đánh giá sao</label>
-                                <StarRating onRatingSelect={handleRatingSelect} />
-                                <label className='lb-form-dky-tiem'><span>*</span> Nội dung phản hồi</label>
-                                <textarea name='noidungph' className='form-control' />
-                                <label className='lb-form-dky-tiem'>Bác sĩ</label>
-                                <Select
-                                    options={doctors.map((item) => ({
-                                        label: item.fullName +", "+item.specialization,
-                                        value: item.id,
-                                    }))}
-                                    placeholder="Chọn bác sĩ tiêm"
-                                    name='doctor'
-                                    isSearchable={true} 
-                                />
-                                <label className='lb-form-dky-tiem'>Y tá</label>
-                                <Select
-                                    options={nurses.map((item) => ({
-                                        label: item.fullName +", "+item.qualification,
-                                        value: item.id,
-                                    }))}
-                                    placeholder="Chọn y tá"
-                                    name='yta'
-                                    isSearchable={true} 
-                                />
-                                <br/><br/>
-                                <button className='btn btn-primary form-control'>Gửi phản hồi</button>
-                            </form>
-                        </div>
-                        </div>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modalscroll">
+                        <h4>Kết quả khám tổng quát</h4><hr/>
+                        <div dangerouslySetInnerHTML={{__html:booking?.conclude}}></div>
+                        <h4>Kết quả khám chi tiết</h4><hr/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Dịch vụ</th>
+                                    <th>Kết quả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {booking?.bookingDetails.map((item=>{
+                                    return <tr>
+                                        <td>#{item.services.id} - {item.services.name}</td>
+                                        <td><div className='noidungxn' dangerouslySetInnerHTML={{__html:item.result}}></div>
+                                        </td>
+                                    </tr>
+                                }))}    
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
                     </div>
                 </div>
-
-                <div class="modal fade" id="modelthanhtoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Thanh toán {formatMoney(item?.vaccineScheduleTime.vaccineSchedule.vaccine.price)}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form onSubmit={dangKyTiem}  class="modal-body">
-                            <table class="table tablepay">
-                                <tr onClick={momoClick}>
-                                    <td><label class="radiocustom">	<p>Thanh toán qua Ví MoMo</p>
-                                            <input value="momo" id="momo" type="radio" name="paytype"/>
-                                            <span class="checkmark"></span></label></td>
-                                    <td><img src={momo} class="momopay"/></td>
-                                </tr>
-                                <tr onClick={vnpayClick}>
-                                    <td><label class="radiocustom">	<p>Thanh toán qua Ví Vnpay</p>
-                                            <input value="vnpay" id="vnpay" type="radio" name="paytype"/>
-                                            <span class="checkmark"></span></label></td>
-                                    <td><img src={vnpay} class="momopay"/></td>
-                                </tr>
-
-                            </table>
-                            <button className='btn btn-primary form-control'>Thanh toán</button>
-                        </form>
-                        </div>
-                    </div>
-                </div>
-                <DoiLich customerSchedule={item}/>
             </div>
         </>
     );

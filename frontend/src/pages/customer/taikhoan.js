@@ -45,26 +45,14 @@ function TaiKhoan(){
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
                 sx={{ borderRight: 1, borderColor: 'divider' }}>
-                <Tab label="Thông tin" {...a11yProps(0)} />
-                <Tab label="Lịch tiêm" {...a11yProps(1)} />
+                <Tab label="Lịch đã đặt" {...a11yProps(0)} />
                 <Tab label="Đổi mật khẩu" {...a11yProps(2)} />
-                <Tab label="Phản hồi" {...a11yProps(3)} />
-                <Tab label="Thanh toán" {...a11yProps(4)} />
             </Tabs>
             <TabPanel value={value} index={0} style={{width:"100%"}}>
-                <CapNhatThongTin/>
-            </TabPanel>
-            <TabPanel value={value} index={1} style={{width:"100%"}}>
                 <LichDaDangKy/>
             </TabPanel>
-            <TabPanel value={value} index={2} style={{width:"100%"}}>
+            <TabPanel value={value} index={1} style={{width:"100%"}}>
                 <DoiMatKhau/>
-            </TabPanel>
-            <TabPanel value={value} index={3} style={{width:"100%"}}>
-                <FeedBack/>
-            </TabPanel>
-            <TabPanel value={value} index={4} style={{width:"100%"}}>
-                Item Five
             </TabPanel>
         </Box>
         </div>

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -58,7 +59,7 @@ public class Booking {
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties(value = {"booking"})
-    private List<BookingDetail> bookingDetails;
+    private List<BookingDetail> bookingDetails = new ArrayList<>();
 
     @Transient
     private Double tongTien = 0D;

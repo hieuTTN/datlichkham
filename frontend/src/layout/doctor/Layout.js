@@ -103,9 +103,9 @@ function Header({ children }){
                 <h5>Quản Lý Phòng Khám <i class="fa fa-bars pointer" id="iconbaradmin" onClick={openClose}></i></h5> 
             </div>
             <ul class="list-unstyled components">
-                <li className={isActive("/admin/index")}>
-                    <a href="/" class="text-white text-decoration-none">
-                        <i class="fa fa-home fa-fw"></i> Trang chủ
+                <li className={isActive("/doctor/myinfor")}>
+                    <a href="/doctor/myinfor" class="text-white text-decoration-none">
+                        <i class="fa fa-user fa-fw"></i> Thông tin cá nhân
                     </a>
                 </li>
                 <li className={isActive(["/doctor/mybooking"])}>

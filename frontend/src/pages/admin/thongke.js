@@ -13,10 +13,8 @@ const ThongKeAdmin = ()=>{
     const [doanhthuHomNay, setDoanhThuHomNay] = useState(0);
     const [soLuongUser, setSoLuongUser] = useState(0);
     const [soLuongBds, setSoLuongBds] = useState(0);
-    const [soLuongBdsTinh, setSoLuongBdsTinh] = useState([]);
     const [year, setYear] = useState([]);
     const [curyear, setCurYear] = useState(0);
-    const [tinViPham, setTinViPham] = useState([]);
     
     useEffect(()=>{
         const getThongKe= async() =>{
@@ -32,13 +30,9 @@ const ThongKeAdmin = ()=>{
             var result = await response.text();
             setSoLuongUser(result)
 
-            var response = await getMethod('/api/statistic/admin/so-luong-bds');
+            var response = await getMethod('/api/statistic/admin/so-luong-bs');
             var result = await response.text();
             setSoLuongBds(result)
-
-            var response = await getMethod('/api/statistic/admin/soLuongBdsCacTinh');
-            var result = await response.json();
-            setSoLuongBdsTinh(result)
 
             var year = new Date().getFullYear();
             var response = await getMethod('/api/statistic/admin/doanh-thu-nam?nam='+year);
@@ -46,9 +40,6 @@ const ThongKeAdmin = ()=>{
             doanhThunam(result)
             setCurYear(year)
 
-            var response = await getMethod('/api/statistic/admin/tin-vi-pham');
-            var result = await response.json();
-            bieuDoTinViPham(result)
         };
         getThongKe();
         getMauSac();
@@ -70,7 +61,6 @@ const ThongKeAdmin = ()=>{
 
     }, []);
 
-    console.log(tinViPham);
     
 
     async function locDoanhThuNam(option) {
@@ -192,44 +182,8 @@ const ThongKeAdmin = ()=>{
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left shadow h-100 py-2">
-                    <span class="lbcard">Số lượng bất động sản</span>
+                    <span class="lbcard">Số lượng bác sĩ</span>
                     <span className='solieudoanhthu'>{soLuongBds}</span>
-                </div>
-            </div>
-        </div>
-        <div className='row'>
-            <div className='col-sm-3'>
-                <div class="headerpageadmin d-flex justify-content-between align-items-center p-3 bg-light border">
-                    <strong class="text-left"><i className='fa fa-users'></i>Số tin vi phạm/ số tin hoạt động</strong>
-                </div>
-                <div class="col-sm-12 divtale">
-                    <div class="card chart-container divtale" id='bieudoVipham'>
-                    </div>
-                </div>
-            </div>
-            <div className='col-sm-9'>
-                <div class="tablediv">
-                    <div class="headertable">
-                        <span class="lbtable">Số lượng tin bất động sản các tỉnh</span>
-                    </div>
-                    <div class="divcontenttable" id="tabletinhbds">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Tên tỉnh</th>
-                                    <th>Số lượng bất động sản</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {soLuongBdsTinh.map((item=>{
-                                    return  <tr>
-                                        <td>{item.tenTinh}</td>
-                                        <td>{item.soLuongBds}</td>
-                                    </tr>
-                                }))}
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

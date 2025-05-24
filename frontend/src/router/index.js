@@ -57,6 +57,7 @@ import CustomerSchedule from "../pages/staff/customerSchedule/CustomerSchedule";
 import DoctorBooking from "../pages/doctor/mybooking";
 import LichLamViec from "../pages/doctor/lichlamviec";
 import EditBookingDetail from "../pages/doctor/editbookingdetail";
+import MyInfor from "../pages/doctor/myinfor";
 
 const publicRoutes = [
     {path: "/", component: index},
@@ -117,6 +118,7 @@ const doctorRoutes = [
     { path: "/doctor/mybooking", component: DoctorBooking, layout: doctorAdmin },
     { path: "/doctor/lichlamviec", component: LichLamViec, layout: doctorAdmin },
     { path: "/doctor/editbookingdetail", component: EditBookingDetail, layout: doctorAdmin },
+    { path: "/doctor/myinfor", component: MyInfor, layout: doctorAdmin },
 ]
 
 

@@ -53,9 +53,9 @@ function ChuyenKhoa(){
                     <h3 class="news-title">Chuyên khoa</h3><br/>
                     {items.map((item, index)=>{
                         return <div class="blog-single-list">
-                            <a href={'blog-detail?id='+item.id}><img src={item.image} alt="News Image" class="imageblogsingle" /></a>
+                            <a href={'chitietchuyenkhoa?id='+item.id}><img src={item.image} alt="News Image" class="imageblogsingle" /></a>
                             <div class="blog-content">
-                            <h4 class="blog-heading"><a href={'blog-detail?id='+item.id} className='linkglo'>{item.name}</a></h4>
+                            <h4 class="blog-heading"><a href={'chitietchuyenkhoa?id='+item.id} className='linkglo'>{item.name}</a></h4>
                             <p class="blog-description">
                                 {item.description}
                             </p>

@@ -44,16 +44,16 @@ function PublicPayment(){
     <div class="content contentlogin">
         <div style={{marginTop:'180px'}}>
             <div id="thanhcong">
-                <h3>Đặt hàng thành công</h3>
-                <p >Cảm ơn bạn đã mua sản phẩm của chúng tôi.</p>
-                <p>Hãy kiểm tra thông tin đặt hàng của bạn trong lịch sử đặt hàng</p>
-                <a href="account#invoice" class="btn btn-danger">Xem lịch sử đặt hàng</a>
+                <h3>Đặt lịch khám thành công</h3>
+                <p >Cảm ơn bạn đã tin tưởng vào dịch vụ của chúng tôi.</p>
+                <p>Hãy kiểm tra thông tin lịch khám của bạn trong lịch sử đặt lịch</p>
+                <a href="/tai-khoan" class="btn btn-danger">Xem lịch sử đặt lịch</a>
             </div>
 
             <div id="thatbai">
                 <h3>Thông báo</h3>
                 <p id="errormess">Bạn chưa hoàn thành thanh toán.</p>
-                <p>Quay về <a href="index" style={{color:'red'}}>trang chủ</a></p>
+                <p>Quay về <a href="/" style={{color:'red'}}>trang chủ</a></p>
             </div>
         </div>
     </div>

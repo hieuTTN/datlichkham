@@ -33,15 +33,23 @@ public class BookingApi {
     }
 
     @GetMapping("/doctor/my-booking")
-    public ResponseEntity<?> myBookingDoctor(Pageable pageable){
-        Page<Booking> result = bookingService.myBookingDoctor(pageable);
+    public ResponseEntity<?> myBookingDoctor(Pageable pageable,@RequestParam(required = false) Date start,
+                                             @RequestParam(required = false) Date end){
+        Page<Booking> result = bookingService.myBookingDoctor(start, end, pageable);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
     @GetMapping("/admin/all")
-    public ResponseEntity<?> myBookingDoctor(Pageable pageable, @RequestParam(required = false) Date start,
+    public ResponseEntity<?> myBookingAdmin(Pageable pageable, @RequestParam(required = false) Date start,
                                              @RequestParam(required = false) Date end){
         Page<Booking> result = bookingService.allBooking(start, end, pageable);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @GetMapping("/user/my-booking")
+    public ResponseEntity<?> myBookingUser(Pageable pageable, @RequestParam(required = false) Date start,
+                                             @RequestParam(required = false) Date end){
+        Page<Booking> result = bookingService.allBookingUser(start, end, pageable);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
@@ -49,6 +57,13 @@ public class BookingApi {
     public ResponseEntity<?> updateStatuc(@RequestParam Long id,
                                              @RequestParam PayStatus payStatus){
         Booking result = bookingService.updateStatus(id, payStatus);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @PostMapping("/doctor/update-result")
+    public ResponseEntity<?> updateResult(@RequestParam Long id,
+                                             @RequestBody String conclude){
+        Booking result = bookingService.updateResult(id, conclude);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 }

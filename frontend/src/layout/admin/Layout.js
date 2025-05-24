@@ -203,12 +203,6 @@ function Header({ children }){
                     </a>
                     <ul class="collapse list-unstyleds" id="dashboardSubmenu1">
                         <li class="nav-item">
-                            <a href="history-pay" class="text-white text-decoration-none ps-4"><i class="fa fa-clock"></i> Lịch sử nạp tiền</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="deduction-history" class="text-white text-decoration-none ps-4"><i class="fa fa-clock"></i> Lịch sử trừ tiền</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="thong-ke" class="text-white text-decoration-none ps-4"><i class="fa fa-chart-line"></i> Thống kê</a>
                         </li>
                     </ul>

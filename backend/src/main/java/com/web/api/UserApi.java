@@ -91,7 +91,7 @@ public class UserApi {
         return new ResponseEntity<>("kích hoạt thành công", HttpStatus.OK);
     }
 
-    @PostMapping("/user/change-password")
+    @PostMapping("/all/change-password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordDto passwordDto){
         userService.changePass(passwordDto.getOldPass(), passwordDto.getNewPass());
         return new ResponseEntity<>("Success", HttpStatus.OK);

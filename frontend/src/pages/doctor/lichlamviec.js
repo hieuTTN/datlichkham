@@ -45,7 +45,6 @@ const LichLamViec = ()=>{
             <div class="headerpageadmin d-flex justify-content-between align-items-center p-3 bg-light border">
                 <strong class="text-left"><i className='fa fa-users'></i> Quản Lý Thời gian làm việc - Bác sỹ {doctor?.fullName} - Chuyên khoa: {doctor?.specialty.name}</strong>
                 <div class="search-wrapper d-flex align-items-center">
-                    <button onClick={()=>chuyenAdd()} class="btn btn-primary ms-2">Thay đổi thời gian làm việc</button>
                 </div>
             </div>
             <div class="tablediv">

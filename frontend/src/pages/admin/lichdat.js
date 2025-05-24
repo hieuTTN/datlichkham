@@ -68,57 +68,58 @@ const AdminLichDat = ()=>{
     }
 
 
-   const exportPDF = (booking) => {
-    const doc = new jsPDF();
+    const printBooking = (booking) => {
+        const html = `
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h2 style="text-align: center;">Hóa Đơn Đặt Lịch Khám</h2>
+                <p><strong>Mã đặt lịch:</strong> ${booking.id}</p>
+                <p><strong>Họ tên bệnh nhân:</strong> ${booking.fullName || booking.user?.fullname || "—"}</p>
+                <p><strong>Ngày sinh:</strong> ${booking.dob || "—"}</p>
+                <p><strong>Số điện thoại:</strong> ${booking.phone || "—"}</p>
+                <p><strong>Địa chỉ:</strong> ${booking.address || "—"}</p>
+                <p><strong>Ngày khám:</strong> ${booking.appointmentDate || "—"}</p>
+                <p><strong>Giờ khám:</strong> ${booking.appointmentTime || "—"}</p>
+                <p><strong>Bác sĩ:</strong> ${booking.doctor?.fullName || "—"}</p>
+                <p><strong>Chuyên khoa:</strong> ${booking.doctor?.specialty?.name || "—"}</p>
+                <p><strong>Mô tả bệnh:</strong> ${booking.diseaseDescription || "—"}</p>
+                <p><strong>Trạng thái thanh toán:</strong> ${booking.payStatus || "—"}</p>
+                <h4>Dịch vụ sử dụng</h4>
+                <table border="1" cellspacing="0" cellpadding="6" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Dịch vụ</th>
+                            <th>Phòng</th>
+                            <th>Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${booking.bookingDetails.map(detail => `
+                            <tr>
+                                <td>${detail.services?.name || "—"}</td>
+                                <td>${detail.services?.room || "—"}</td>
+                                <td>${(detail.price || 0).toLocaleString("vi-VN")} đ</td>
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+                <h4 style="text-align: right;">Tổng tiền: ${booking.tongTien?.toLocaleString("vi-VN") || "0"} đ</h4>
+            </div>
+        `;
 
-    doc.setFont("helvetica", "normal"); // Font hỗ trợ tiếng Việt đơn giản
-    doc.setFontSize(18);
-    doc.text("Thông Tin Đặt Lịch Khám", 70, 15);
+        const printWindow = window.open('', '', 'width=900,height=700');
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>In thông tin đặt lịch</title>
+            </head>
+            <body onload="window.print(); window.onafterprint = () => window.close();">
+                ${html}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+    };
 
-    doc.setFontSize(12);
-    const info = [
-        ["Mã đặt lịch:", booking.id],
-        ["Họ tên bệnh nhân:", booking.fullName || booking.user?.fullname || "—"],
-        ["Ngày sinh:", booking.dob || "—"],
-        ["Số điện thoại:", booking.phone || "—"],
-        ["Địa chỉ:", booking.address || "—"],
-        ["Ngày khám:", booking.appointmentDate || "—"],
-        ["Giờ khám:", booking.appointmentTime || "—"],
-        ["Bác sĩ:", booking.doctor?.fullName || "—"],
-        ["Chuyên khoa:", booking.doctor?.specialty?.name || "—"],
-        ["Mô tả bệnh:", booking.diseaseDescription || "—"],
-        ["Trạng thái thanh toán:", booking.payStatus || "—"],
-    ];
-
-    let y = 30;
-    info.forEach(([label, value]) => {
-        doc.text(`${label} ${value}`, 10, y);
-        y += 8;
-    });
-
-    // Bảng dịch vụ
-    autoTable(doc, {
-        startY: y + 5,
-        head: [["Dịch vụ", "Phòng", "Giá", "Kết quả"]],
-        body: booking.bookingDetails.map((detail) => [
-            detail.services.name || "—",
-            detail.services.room || "—",
-            (detail.price || 0).toLocaleString() + " đ",
-            detail.result || "—",
-        ]),
-    });
-
-    // Tổng tiền
-    doc.setFontSize(14);
-    doc.text(
-        `Tổng tiền: ${booking.tongTien?.toLocaleString() || "0"} đ`,
-        140,
-        doc.lastAutoTable.finalY + 10
-    );
-
-    // Xuất file
-    doc.save("booking.pdf");
-};
 
 
     return (
@@ -151,9 +152,9 @@ const AdminLichDat = ()=>{
                                 <th>Địa chỉ</th>
                                 <th>Ngày sinh</th>
                                 <th>Mô tả bệnh</th>
-                                <th>Kết luận</th>
                                 <th>Tổng tiền dịch vụ</th>
-                                <th class="sticky-col">Hành động</th>
+                                <th>Cập nhật</th>
+                                <th>In</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,15 +168,15 @@ const AdminLichDat = ()=>{
                                     <td>{item.address}</td>
                                     <td>{item.dob}</td>
                                     <td>{item.diseaseDescription}</td>
-                                    <td>{item.conclude}</td>
                                     <td>{formatMoney(item.tongTien)}</td>
                                     <td class="sticky-col">
                                         <select onChange={(e)=>updateStatus(e.target, item.id)} className='form-control'>
                                             <option selected={item.payStatus == 'DA_THANH_TOAN_KHAM'} value='DA_THANH_TOAN_KHAM'>Đã thanh toán khám</option>
                                             <option selected={item.payStatus == 'DA_THANH_TOAN_DU'} value='DA_THANH_TOAN_DU'>Đã thanh toán đủ</option>
                                         </select>
-
-                                        <button onClick={()=>exportPDF(item)} className='delete-btn'><i className='fa fa-file'></i></button>
+                                    </td>
+                                    <td>
+                                        <button onClick={()=>printBooking(item)} className='delete-btn'><i className='fa fa-print'></i></button>
                                     </td>
                                 </tr>
                             }))}
@@ -199,7 +200,7 @@ const AdminLichDat = ()=>{
                         activeClassName='active'/>
                 </div>
             </div>
-
+        <div id="print-area" style={{ display: "none" }}></div>
         </>
     );
 }

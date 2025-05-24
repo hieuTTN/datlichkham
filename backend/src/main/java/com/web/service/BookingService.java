@@ -65,11 +65,19 @@ public class BookingService {
         return booking;
     }
 
-    public Page<Booking> myBookingDoctor(Pageable pageable) {
+    public Page<Booking> myBookingDoctor(Date start, Date end, Pageable pageable) {
         User user = userUtils.getUserWithAuthority();
         Doctor doctor = doctorRepository.findByUserId(user.getId());
-        Page<Booking> bookings = bookingRepository.findByDoctor(doctor.getId(), pageable);
-        return bookings;
+
+        Page<Booking> page = null;
+        if(start == null || end == null){
+            page = bookingRepository.findByDoctor(doctor.getId(), pageable);
+        }
+        else{
+            page = bookingRepository.findByDoctor(doctor.getId(), start, end, pageable);
+        }
+        return page;
+
     }
 
     public Page<Booking> allBooking(Date start, Date end, Pageable pageable) {
@@ -86,6 +94,25 @@ public class BookingService {
     public Booking updateStatus(Long id, PayStatus payStatus) {
         Booking booking = bookingRepository.findById(id).get();
         booking.setPayStatus(payStatus);
+        bookingRepository.save(booking);
+        return booking;
+    }
+
+    public Page<Booking> allBookingUser(Date start, Date end, Pageable pageable) {
+        Page<Booking> page = null;
+        User user = userUtils.getUserWithAuthority();
+        if(start == null || end == null){
+            page = bookingRepository.findByUser(user.getId(),pageable);
+        }
+        else{
+            page = bookingRepository.findByUserAndDate(user.getId(), start, end, pageable);
+        }
+        return page;
+    }
+
+    public Booking updateResult(Long id, String conclude) {
+        Booking booking = bookingRepository.findById(id).get();
+        booking.setConclude(conclude);
         bookingRepository.save(booking);
         return booking;
     }
